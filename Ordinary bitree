@@ -1,0 +1,100 @@
+#include<iostream>
+#include<cstdlib>
+#include <algorithm>
+using namespace std;
+typedef struct bitreenode
+{
+	int data;
+	struct bitreenode *lchild,*rchild;
+}binode; 
+
+//先序创建二叉树
+binode* creatbitree(){
+	binode *p;
+	int c;
+	cin>>c;
+	if(c==0)
+		p=NULL;	
+	else
+	{
+	p=(binode *)malloc(sizeof(binode));
+	p->data=c;
+	p->lchild=creatbitree();
+	p->rchild=creatbitree();
+	}
+	return p;
+} 
+//先序遍历
+void preorder(binode *p){
+	if(p){
+	printf("%d ",p->data);
+	preorder(p->lchild);
+	preorder(p->rchild);
+	}
+}
+//后序遍历
+void aforder(binode *p){
+	if(p){
+		aforder(p->lchild);
+		aforder(p->rchild);
+		cout<<p->data<<" ";
+	}
+}
+//中序遍历
+void inorder(binode *p){
+	if(p){
+	inorder(p->lchild);
+	cout<<p->data<<" ";
+	inorder	(p->rchild);
+	}
+}
+//计算总节点数
+int calnode(binode *p){
+	if(p==NULL)
+	return 0;
+	else
+	return 1+calnode(p->lchild)+calnode(p->rchild);
+} 
+//叶子节点数
+int calleave(binode *p){
+	if(p==NULL)
+		return 0;
+	else{
+		if(p->lchild==NULL&&p->rchild==NULL)
+		return 1;
+		else
+		return calleave(p->lchild)+calleave(p->rchild);	
+	}
+}
+int biheigh(binode *p){
+	if(p==NULL)
+		return 0;
+	else
+	
+	return biheigh(p->lchild)>biheigh(p->rchild)?biheigh(p->lchild)+1:biheigh(p->rchild)+1;
+	
+	
+} 
+int main(){
+	binode *p=NULL;
+	p=creatbitree();
+	cout<<"先序遍历 " ;
+	preorder(p);
+	cout<<endl<<"后序遍历 ";
+	aforder(p);
+	cout<<endl<<"中序遍历 ";
+	inorder(p);
+	cout<<endl;
+	cout<<"总节点数：  "<<calnode(p)<<endl;
+	cout<<"叶子节点数："<<calleave(p)<<endl;
+	cout<<"树的高度：  "<<biheigh(p)<<endl;
+	return 0;
+}
+
+
+
+
+
+
+
+ 
